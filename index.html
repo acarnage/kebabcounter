@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Example</title>
+    <style>
+        .bb {
+background-image:  url('bg.png')
+        }
+    </style>
     <script src="https://cdn-tailwindcss.vercel.app/"></script>
     <script>
       tailwind.config = {
@@ -15,9 +20,110 @@
           },
         },
       }
+
+
     </script>
   </head>
-  <body>
-    <h1 class="text-red-500">Hello</h1>
+  <body  onload="onload()">
+    <section class="flex items-center justify-center flex-col w-screen h-screen bg-gray-100">
+
+        <div class="overflow-hidden shadow-xl bb bg-red-700 w-[60%] max-w-3xl min-w-[50%] rounded-2xl flex flex-col items-center justify-between">
+            <span class="pt-10 text-5xl font-semibold text-gray-100">Qui doit des kebabs ?</span>
+            <div class="flex flex-col items-center justify-end w-full pt-6">
+                <div class=" w-full  flex items-end justify-center">
+                    <div class="bg-white w-40 rounded-t-2xl h-32 relative flex flex-col items-center justify-start">
+                        <div class="bg-orange-500 font-bold text-2xl rounded-full flex items-center justify-center w-10 h-10 absolute -top-5">
+                            3
+                        </div>
+
+                        <span id="3rd" class="pt-6 text-2xl font-bold  text-red-700  ">
+                            REO
+                        </span>
+
+                        <span id="3rdc" class="text-xl">
+                            1 
+                        </span>
+                    </div>
+
+                    <div class="bg-white w-40 rounded-t-2xl h-60 mx-6 relative flex flex-col items-center justify-start">
+                        <div class="bg-yellow-500 font-bold text-2xl rounded-full flex items-center justify-center w-10 h-10 absolute -top-5">
+                            1
+                        </div>
+
+                        <span id="1st" class="pt-6 text-2xl font-bold  text-red-700 ">
+                            REO
+                        </span>
+
+                        <span id="1stc" class="text-3xl font-semibold   ">
+                            1 
+                        </span>
+                        <img src="doner-kebab.png" class="w-20 pt-4" alt="">
+
+                    </div>
+
+                    <div class="bg-white w-40 rounded-t-2xl h-44 relative flex flex-col items-center justify-start">
+                        <div class="bg-gray-300 font-bold text-2xl rounded-full flex items-center justify-center w-10 h-10 absolute -top-5">
+                            2
+                        </div>
+
+                        <span id="2nd" class="pt-6 text-2xl font-bold  text-red-700 ">
+                            REO
+                        </span>
+
+                        <span id="2ndc" class="text-xl">
+                            1 
+                        </span>
+
+                    </div>
+                </div>
+                <div class="bg-white w-full flex flex-col items-center justify-start pt-6   pb-6 divide-y-4 divide-red-700 divide-dashed">
+                    <span class="text-3xl">
+                        Classement
+                    </span>
+
+                    <div id="classement" class="flex flex-col items-center justify-start w-3/5 pt-6">
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+
+        </div>
+    </section>
   </body>
+  <script>
+      function onload(){
+        fetch("kebabs.json")
+            .then(response => response.json())
+            .then(json =>  {
+                json.sort((a, b) => {
+                    return  b.count - a.count; 
+                })
+                data = json 
+                console.log(json)
+                var counter = 1 
+                for (var user of json) 
+                {
+                 
+                  if (counter ==1){
+                      document.getElementById("1st").innerHTML = user.name
+                      document.getElementById('1stc').innerHTML = user.count
+                  }else if (counter==2){
+                    document.getElementById("2nd").innerHTML = user.name
+                      document.getElementById('2ndc').innerHTML = user.count
+                  }else if(counter==3){
+                    document.getElementById("3rd").innerHTML = user.name
+                      document.getElementById('3rdc').innerHTML = user.count
+                  }
+                  document.getElementById("classement").innerHTML += '<div class="flex items-center justify-between  w-full pt-2"><span class="font-bold">'+user.name+'</span><span class="font-semibold text-2xl text-red-700">'+user.count+'</span></div>'
+                  
+                  counter +=1
+                }
+
+            })
+        
+      }
+  </script>
 </html>
